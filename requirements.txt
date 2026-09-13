@@ -1,0 +1,15 @@
+requests
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+statsmodels
+xgboost
+shap
+joblib
+google-generativeai
+sentence-transformers
+plotly
+streamlit
+pyarrow
