@@ -236,7 +236,18 @@ with tab2:
         }])
 
         prediction = model.predict(input_df)[0]
-        probability = model.predict_proba(input_df)[0][1]
+
+        # Robust probability handling:
+        # A live NASA feed can sometimes contain only one target class.
+        # In that case predict_proba() has only one probability column.
+        probabilities = model.predict_proba(input_df)[0]
+        classes = model.named_steps["classifier"].classes_
+
+        if len(classes) == 1:
+            probability = 1.0 if classes[0] == 1 else 0.0
+        else:
+            hazard_index = list(classes).index(1)
+            probability = probabilities[hazard_index]
 
         if prediction == 1:
             st.error(
